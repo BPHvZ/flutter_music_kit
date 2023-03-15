@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  music_kit_platform_interface: ^1.1.0
+  music_kit_platform_interface:
+    path: ../music_kit_platform_interface
 
 dev_dependencies:
   flutter_test:

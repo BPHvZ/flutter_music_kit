@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:music_kit/music_kit.dart';
 import 'package:music_kit_example/fixture.dart';
 
@@ -17,8 +17,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _musicKitPlugin = MusicKit();
-  MusicAuthorizationStatus _status =
-      const MusicAuthorizationStatus.notDetermined();
+  MusicAuthorizationStatus _status = const MusicAuthorizationStatus(
+      status: MusicAuthorizationStatusEnum.notDetermined);
   String? _developerToken = '';
   String _userToken = '';
   String _countryCode = '';

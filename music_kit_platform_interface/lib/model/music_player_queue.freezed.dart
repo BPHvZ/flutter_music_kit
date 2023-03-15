@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'music_player_queue.dart';
 
@@ -37,7 +37,8 @@ mixin _$MusicPlayerQueueEntry {
 abstract class $MusicPlayerQueueEntryCopyWith<$Res> {
   factory $MusicPlayerQueueEntryCopyWith(MusicPlayerQueueEntry value,
           $Res Function(MusicPlayerQueueEntry) then) =
-      _$MusicPlayerQueueEntryCopyWithImpl<$Res>;
+      _$MusicPlayerQueueEntryCopyWithImpl<$Res, MusicPlayerQueueEntry>;
+  @useResult
   $Res call(
       {Artwork? artwork,
       String id,
@@ -49,54 +50,58 @@ abstract class $MusicPlayerQueueEntryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MusicPlayerQueueEntryCopyWithImpl<$Res>
+class _$MusicPlayerQueueEntryCopyWithImpl<$Res,
+        $Val extends MusicPlayerQueueEntry>
     implements $MusicPlayerQueueEntryCopyWith<$Res> {
   _$MusicPlayerQueueEntryCopyWithImpl(this._value, this._then);
 
-  final MusicPlayerQueueEntry _value;
   // ignore: unused_field
-  final $Res Function(MusicPlayerQueueEntry) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? artwork = freezed,
-    Object? id = freezed,
+    Object? id = null,
     Object? item = freezed,
-    Object? title = freezed,
+    Object? title = null,
     Object? subtitle = freezed,
   }) {
     return _then(_value.copyWith(
-      artwork: artwork == freezed
+      artwork: freezed == artwork
           ? _value.artwork
           : artwork // ignore: cast_nullable_to_non_nullable
               as Artwork?,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      item: item == freezed
+      item: freezed == item
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      subtitle: subtitle == freezed
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ArtworkCopyWith<$Res>? get artwork {
     if (_value.artwork == null) {
       return null;
     }
 
     return $ArtworkCopyWith<$Res>(_value.artwork!, (value) {
-      return _then(_value.copyWith(artwork: value));
+      return _then(_value.copyWith(artwork: value) as $Val);
     });
   }
 }
@@ -108,6 +113,7 @@ abstract class _$$_MusicPlayerQueueEntryCopyWith<$Res>
           $Res Function(_$_MusicPlayerQueueEntry) then) =
       __$$_MusicPlayerQueueEntryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Artwork? artwork,
       String id,
@@ -121,42 +127,39 @@ abstract class _$$_MusicPlayerQueueEntryCopyWith<$Res>
 
 /// @nodoc
 class __$$_MusicPlayerQueueEntryCopyWithImpl<$Res>
-    extends _$MusicPlayerQueueEntryCopyWithImpl<$Res>
+    extends _$MusicPlayerQueueEntryCopyWithImpl<$Res, _$_MusicPlayerQueueEntry>
     implements _$$_MusicPlayerQueueEntryCopyWith<$Res> {
   __$$_MusicPlayerQueueEntryCopyWithImpl(_$_MusicPlayerQueueEntry _value,
       $Res Function(_$_MusicPlayerQueueEntry) _then)
-      : super(_value, (v) => _then(v as _$_MusicPlayerQueueEntry));
+      : super(_value, _then);
 
-  @override
-  _$_MusicPlayerQueueEntry get _value =>
-      super._value as _$_MusicPlayerQueueEntry;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? artwork = freezed,
-    Object? id = freezed,
+    Object? id = null,
     Object? item = freezed,
-    Object? title = freezed,
+    Object? title = null,
     Object? subtitle = freezed,
   }) {
     return _then(_$_MusicPlayerQueueEntry(
-      artwork: artwork == freezed
+      artwork: freezed == artwork
           ? _value.artwork
           : artwork // ignore: cast_nullable_to_non_nullable
               as Artwork?,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      item: item == freezed
+      item: freezed == item
           ? _value._item
           : item // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      subtitle: subtitle == freezed
+      subtitle: freezed == subtitle
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -187,6 +190,7 @@ class _$_MusicPlayerQueueEntry implements _MusicPlayerQueueEntry {
   Map<String, dynamic>? get item {
     final value = _item;
     if (value == null) return null;
+    if (_item is EqualUnmodifiableMapView) return _item;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(value);
   }
@@ -206,32 +210,31 @@ class _$_MusicPlayerQueueEntry implements _MusicPlayerQueueEntry {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MusicPlayerQueueEntry &&
-            const DeepCollectionEquality().equals(other.artwork, artwork) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            (identical(other.artwork, artwork) || other.artwork == artwork) &&
+            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other._item, _item) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.subtitle, subtitle));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.subtitle, subtitle) ||
+                other.subtitle == subtitle));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(artwork),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(_item),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(subtitle));
+  int get hashCode => Object.hash(runtimeType, artwork, id,
+      const DeepCollectionEquality().hash(_item), title, subtitle);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MusicPlayerQueueEntryCopyWith<_$_MusicPlayerQueueEntry> get copyWith =>
       __$$_MusicPlayerQueueEntryCopyWithImpl<_$_MusicPlayerQueueEntry>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MusicPlayerQueueEntryToJson(this);
+    return _$$_MusicPlayerQueueEntryToJson(
+      this,
+    );
   }
 }
 
@@ -247,15 +250,15 @@ abstract class _MusicPlayerQueueEntry implements MusicPlayerQueueEntry {
       _$_MusicPlayerQueueEntry.fromJson;
 
   @override
-  Artwork? get artwork => throw _privateConstructorUsedError;
+  Artwork? get artwork;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  Map<String, dynamic>? get item => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get item;
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String? get subtitle => throw _privateConstructorUsedError;
+  String? get subtitle;
   @override
   @JsonKey(ignore: true)
   _$$_MusicPlayerQueueEntryCopyWith<_$_MusicPlayerQueueEntry> get copyWith =>
@@ -281,7 +284,8 @@ mixin _$MusicPlayerQueue {
 abstract class $MusicPlayerQueueCopyWith<$Res> {
   factory $MusicPlayerQueueCopyWith(
           MusicPlayerQueue value, $Res Function(MusicPlayerQueue) then) =
-      _$MusicPlayerQueueCopyWithImpl<$Res>;
+      _$MusicPlayerQueueCopyWithImpl<$Res, MusicPlayerQueue>;
+  @useResult
   $Res call(
       {List<MusicPlayerQueueEntry> entries,
       MusicPlayerQueueEntry? currentEntry});
@@ -290,39 +294,42 @@ abstract class $MusicPlayerQueueCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MusicPlayerQueueCopyWithImpl<$Res>
+class _$MusicPlayerQueueCopyWithImpl<$Res, $Val extends MusicPlayerQueue>
     implements $MusicPlayerQueueCopyWith<$Res> {
   _$MusicPlayerQueueCopyWithImpl(this._value, this._then);
 
-  final MusicPlayerQueue _value;
   // ignore: unused_field
-  final $Res Function(MusicPlayerQueue) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? entries = freezed,
+    Object? entries = null,
     Object? currentEntry = freezed,
   }) {
     return _then(_value.copyWith(
-      entries: entries == freezed
+      entries: null == entries
           ? _value.entries
           : entries // ignore: cast_nullable_to_non_nullable
               as List<MusicPlayerQueueEntry>,
-      currentEntry: currentEntry == freezed
+      currentEntry: freezed == currentEntry
           ? _value.currentEntry
           : currentEntry // ignore: cast_nullable_to_non_nullable
               as MusicPlayerQueueEntry?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MusicPlayerQueueEntryCopyWith<$Res>? get currentEntry {
     if (_value.currentEntry == null) {
       return null;
     }
 
     return $MusicPlayerQueueEntryCopyWith<$Res>(_value.currentEntry!, (value) {
-      return _then(_value.copyWith(currentEntry: value));
+      return _then(_value.copyWith(currentEntry: value) as $Val);
     });
   }
 }
@@ -334,6 +341,7 @@ abstract class _$$_MusicPlayerQueueCopyWith<$Res>
           _$_MusicPlayerQueue value, $Res Function(_$_MusicPlayerQueue) then) =
       __$$_MusicPlayerQueueCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<MusicPlayerQueueEntry> entries,
       MusicPlayerQueueEntry? currentEntry});
@@ -344,26 +352,24 @@ abstract class _$$_MusicPlayerQueueCopyWith<$Res>
 
 /// @nodoc
 class __$$_MusicPlayerQueueCopyWithImpl<$Res>
-    extends _$MusicPlayerQueueCopyWithImpl<$Res>
+    extends _$MusicPlayerQueueCopyWithImpl<$Res, _$_MusicPlayerQueue>
     implements _$$_MusicPlayerQueueCopyWith<$Res> {
   __$$_MusicPlayerQueueCopyWithImpl(
       _$_MusicPlayerQueue _value, $Res Function(_$_MusicPlayerQueue) _then)
-      : super(_value, (v) => _then(v as _$_MusicPlayerQueue));
+      : super(_value, _then);
 
-  @override
-  _$_MusicPlayerQueue get _value => super._value as _$_MusicPlayerQueue;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? entries = freezed,
+    Object? entries = null,
     Object? currentEntry = freezed,
   }) {
     return _then(_$_MusicPlayerQueue(
-      entries: entries == freezed
+      entries: null == entries
           ? _value._entries
           : entries // ignore: cast_nullable_to_non_nullable
               as List<MusicPlayerQueueEntry>,
-      currentEntry: currentEntry == freezed
+      currentEntry: freezed == currentEntry
           ? _value.currentEntry
           : currentEntry // ignore: cast_nullable_to_non_nullable
               as MusicPlayerQueueEntry?,
@@ -384,6 +390,7 @@ class _$_MusicPlayerQueue implements _MusicPlayerQueue {
   final List<MusicPlayerQueueEntry> _entries;
   @override
   List<MusicPlayerQueueEntry> get entries {
+    if (_entries is EqualUnmodifiableListView) return _entries;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_entries);
   }
@@ -402,25 +409,26 @@ class _$_MusicPlayerQueue implements _MusicPlayerQueue {
         (other.runtimeType == runtimeType &&
             other is _$_MusicPlayerQueue &&
             const DeepCollectionEquality().equals(other._entries, _entries) &&
-            const DeepCollectionEquality()
-                .equals(other.currentEntry, currentEntry));
+            (identical(other.currentEntry, currentEntry) ||
+                other.currentEntry == currentEntry));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_entries),
-      const DeepCollectionEquality().hash(currentEntry));
+      runtimeType, const DeepCollectionEquality().hash(_entries), currentEntry);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MusicPlayerQueueCopyWith<_$_MusicPlayerQueue> get copyWith =>
       __$$_MusicPlayerQueueCopyWithImpl<_$_MusicPlayerQueue>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MusicPlayerQueueToJson(this);
+    return _$$_MusicPlayerQueueToJson(
+      this,
+    );
   }
 }
 
@@ -433,9 +441,9 @@ abstract class _MusicPlayerQueue implements MusicPlayerQueue {
       _$_MusicPlayerQueue.fromJson;
 
   @override
-  List<MusicPlayerQueueEntry> get entries => throw _privateConstructorUsedError;
+  List<MusicPlayerQueueEntry> get entries;
   @override
-  MusicPlayerQueueEntry? get currentEntry => throw _privateConstructorUsedError;
+  MusicPlayerQueueEntry? get currentEntry;
   @override
   @JsonKey(ignore: true)
   _$$_MusicPlayerQueueCopyWith<_$_MusicPlayerQueue> get copyWith =>

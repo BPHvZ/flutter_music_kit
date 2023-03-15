@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:music_kit_platform_interface/model/catalog_song_response.dart';
 import 'package:music_kit_platform_interface/music_kit_platform_interface.dart';
 
 class MethodChannelMusicKit extends MusicKitPlatform {
@@ -37,7 +40,9 @@ class MethodChannelMusicKit extends MusicKitPlatform {
         musicUserToken: resp['musicUserToken']?.toString(),
       );
     } catch (_) {
-      return const MusicAuthorizationStatus.notDetermined();
+      return const MusicAuthorizationStatus(
+        status: MusicAuthorizationStatusEnum.notDetermined,
+      );
     }
   }
 
@@ -236,5 +241,14 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   Future<MusicPlayerShuffleMode> toggleShuffleMode() async {
     final resp = await methodChannel.invokeMethod<int>('toggleShuffleMode');
     return MusicPlayerShuffleMode.values[resp ?? 0];
+  }
+
+  @override
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
+    String? jsonString =
+        await methodChannel.invokeMethod<String?>('searchSongByISRC', isrc);
+    if (jsonString == null) return null;
+    Map<String, dynamic> json = jsonDecode(jsonString);
+    return CatalogSongResponse.fromJson(json);
   }
 }

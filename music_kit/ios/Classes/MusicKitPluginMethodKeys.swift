@@ -35,5 +35,7 @@ extension SwiftMusicKitPlugin {
     case shuffleMode
     case setShuffleMode
     case toggleShuffleMode
+    // search
+    case searchSongByISRC
   }
 }

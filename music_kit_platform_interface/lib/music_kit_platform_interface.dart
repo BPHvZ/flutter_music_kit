@@ -1,17 +1,20 @@
 library music_kit_platform_interface;
 
 import 'package:music_kit_platform_interface/method_channel/method_channel_music_kit.dart';
+import 'package:music_kit_platform_interface/model/catalog_song_response.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'model/music_authorization_status.dart';
-import 'model/music_subscription.dart';
 import 'model/music_player.dart';
 import 'model/music_player_queue.dart';
+import 'model/music_subscription.dart';
 
+export 'model/catalog_song_response.dart';
 export 'model/music_authorization_status.dart';
-export 'model/music_subscription.dart';
+export 'model/music_authorization_status_enum.dart';
 export 'model/music_player.dart';
 export 'model/music_player_queue.dart';
+export 'model/music_subscription.dart';
 
 typedef JSONObject = Map<String, dynamic>;
 typedef ResourceObject = JSONObject;
@@ -162,5 +165,9 @@ abstract class MusicKitPlatform extends PlatformInterface {
 
   Future<MusicPlayerShuffleMode> toggleShuffleMode() async {
     throw UnimplementedError('toggleShuffleMode() has not been implemented.');
+  }
+
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
+    throw UnimplementedError('searchSongByISRC() has not been implemented.');
   }
 }

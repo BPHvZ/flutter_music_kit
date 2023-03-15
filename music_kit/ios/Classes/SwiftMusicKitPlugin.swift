@@ -107,6 +107,9 @@ public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
       
     case .toggleShuffleMode:
       toggleShuffleMode(result)
+    
+    case .searchSongByISRC:
+        searchSongByISRC(call.arguments as! String, result: result)
     }
   }
 }

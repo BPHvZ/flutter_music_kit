@@ -3,13 +3,16 @@ import 'package:music_kit_platform_interface/music_kit_platform_interface.dart';
 export 'package:music_kit_platform_interface/music_kit_platform_interface.dart'
     show
         MusicAuthorizationStatus,
+        MusicAuthorizationStatusEnum,
         MusicSubscription,
         MusicPlayerState,
         MusicPlayerQueue,
         MusicPlayerQueueEntry,
         MusicPlayerPlaybackStatus,
         MusicPlayerRepeatMode,
-        MusicPlayerShuffleMode;
+        MusicPlayerShuffleMode,
+        CatalogSongResponse,
+        Song;
 
 class MusicKit {
   factory MusicKit() {
@@ -109,4 +112,7 @@ class MusicKit {
 
   Future<MusicPlayerShuffleMode> toggleShuffleMode() =>
       _platform.toggleShuffleMode();
+
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) =>
+      _platform.searchSongByISRC(isrc);
 }
