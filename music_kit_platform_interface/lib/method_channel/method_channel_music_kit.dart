@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:music_kit_platform_interface/model/catalog_song_response.dart';
 import 'package:music_kit_platform_interface/music_kit_platform_interface.dart';
 
 class MethodChannelMusicKit extends MusicKitPlatform {
@@ -244,9 +243,9 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   }
 
   @override
-  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
-    String? jsonString =
-        await methodChannel.invokeMethod<String?>('searchSongByISRC', isrc);
+  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) async {
+    String? jsonString = await methodChannel
+        .invokeMethod<String>('searchAndSetSongByISRC', {"isrc": isrc});
     if (jsonString == null) return null;
     Map<String, dynamic> json = jsonDecode(jsonString);
     return CatalogSongResponse.fromJson(json);

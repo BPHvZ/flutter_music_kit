@@ -1,9 +1,11 @@
 package app.misi.music_kit
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.Log
 import androidx.annotation.Keep
 import app.misi.music_kit.AuthActivityResultHandler.Companion.ERR_REQUEST_USER_TOKEN
+import app.misi.music_kit.infrastructure.CatalogSongsRepository
 import app.misi.music_kit.infrastructure.UserStorefrontRepository
 import app.misi.music_kit.util.AppleMusicTokenProvider
 import app.misi.music_kit.util.Constant.LOG_TAG
@@ -17,6 +19,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import kotlinx.coroutines.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.lang.reflect.Method
 
 class ChannelHandler(
@@ -25,8 +29,7 @@ class ChannelHandler(
 ) : MethodCallHandler {
   companion object {
     const val METHOD_CHANNEL_NAME = "plugins.misi.app/music_kit"
-    const val MUSIC_SUBSCRIPTION_EVENT_CHANNEL_NAME =
-      "plugins.misi.app/music_kit/music_subscription"
+    const val MUSIC_SUBSCRIPTION_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/music_subscription"
     const val MUSIC_PLAYER_STATE_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/player_state"
     const val MUSIC_PLAYER_QUEUE_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/player_queue"
 
@@ -39,6 +42,7 @@ class ChannelHandler(
   private var methodChannel: MethodChannel? = null
   private var playerStateEventChannel: EventChannel? = null
   private var playerQueueEventChannel: EventChannel? = null
+  private var subscriptionEventChannel: EventChannel? = null
 
   private lateinit var developerToken: String
   private var musicUserToken: String? = null
@@ -57,6 +61,7 @@ class ChannelHandler(
     if (methodChannel != null
       || playerStateEventChannel != null
       || playerQueueEventChannel != null
+      || subscriptionEventChannel != null
     ) {
       stopListening()
     }
@@ -67,6 +72,8 @@ class ChannelHandler(
 
     playerStateEventChannel = EventChannel(messenger, MUSIC_PLAYER_STATE_EVENT_CHANNEL_NAME)
     playerQueueEventChannel = EventChannel(messenger, MUSIC_PLAYER_QUEUE_EVENT_CHANNEL_NAME)
+    subscriptionEventChannel = EventChannel(messenger, MUSIC_SUBSCRIPTION_EVENT_CHANNEL_NAME)
+    subscriptionEventChannel?.setStreamHandler(null)
 
     if (playerController != null) {
       playerStateEventChannel?.setStreamHandler(PlayerStateStreamHandler(playerController))
@@ -83,6 +90,9 @@ class ChannelHandler(
 
     playerQueueEventChannel?.setStreamHandler(null)
     playerQueueEventChannel = null
+
+    subscriptionEventChannel?.setStreamHandler(null)
+    subscriptionEventChannel = null
 
     playerController?.release()
   }
@@ -431,5 +441,55 @@ class ChannelHandler(
       playerController?.shuffleMode = shuffleMode
     }
     result.success(shuffleMode)
+  }
+
+  @Keep
+  @Suppress("unused", "UNUSED_PARAMETER")
+  fun searchAndSetSongByISRC(call: MethodCall, result: MethodChannel.Result) {
+    val isrc = call.argument<String>("isrc")
+
+    if (musicUserToken.isNullOrBlank()) {
+      result.error("ERROR_FETCHING_SONG", "No valid musicUserToken provided", null)
+      return
+    }
+
+    if (storefrontId.isNullOrBlank()) {
+      result.error("ERROR_FETCHING_SONG", "You should fetch the current country code first", null)
+      return
+    }
+
+    if (isrc.isNullOrBlank()) {
+      result.error("ERROR_FETCHING_SONG", "No ISRC provided", null)
+      return
+    }
+
+    val catalogSongsRepo = CatalogSongsRepository()
+
+    coroutineScope.launch {
+      val response = catalogSongsRepo.searchSongByISRC(developerToken, musicUserToken!!, storefrontId!!, isrc)
+      response.fold(
+        {
+          if (it != null) {
+
+            // Add song to queue
+            // Normally we would want to do this in another function
+            // Due to problems with the iOS implementation we do it here
+            val itemType = it.type as String
+            val queueProviderBuilder = CatalogPlaybackQueueItemProvider.Builder()
+            val mediaItemType = when (itemType) {
+              "songs", "tracks" -> MediaItemType.SONG
+              else -> MediaItemType.UNKNOWN
+            }
+            val ids = listOf(it.id as String).toTypedArray()
+            queueProviderBuilder.items(mediaItemType, *ids)
+            playerController?.prepare(queueProviderBuilder.build(), false)
+            result.success(Json.encodeToString(it))
+          } else {
+            result.success(null)
+          }
+        },
+        { result.error("ERROR_FETCHING_SONG", it.message, null) }
+      )
+    }
   }
 }

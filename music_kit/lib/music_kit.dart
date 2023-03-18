@@ -113,6 +113,6 @@ class MusicKit {
   Future<MusicPlayerShuffleMode> toggleShuffleMode() =>
       _platform.toggleShuffleMode();
 
-  Future<CatalogSongResponse?> searchSongByISRC(String isrc) =>
-      _platform.searchSongByISRC(isrc);
+  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) =>
+      _platform.searchAndSetSongByISRC(isrc);
 }

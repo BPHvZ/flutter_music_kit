@@ -8,6 +8,13 @@ interface MusicApi {
     musicUserToken: String
   ): String
 
+  suspend fun searchSongByISRC(
+    developerToken: String,
+    musicUserToken: String,
+    storefront: String,
+    isrc: String
+  ): CatalogSongResponseItem?
+
   companion object {
     fun create(): MusicApiImpl {
       return MusicApiImpl(

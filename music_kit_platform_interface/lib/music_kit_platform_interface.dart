@@ -167,7 +167,8 @@ abstract class MusicKitPlatform extends PlatformInterface {
     throw UnimplementedError('toggleShuffleMode() has not been implemented.');
   }
 
-  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
-    throw UnimplementedError('searchSongByISRC() has not been implemented.');
+  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) async {
+    throw UnimplementedError(
+        'searchAndSetSongByISRC() has not been implemented.');
   }
 }

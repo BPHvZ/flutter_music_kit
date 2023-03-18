@@ -30,6 +30,7 @@
             android:name="com.apple.android.sdk.authentication.SDKUriHandlerActivity"
             android:exported="true"
             tools:overrideLibrary="com.apple.android.sdk.authentication"
+            tools:ignore="MissingClass"
            />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

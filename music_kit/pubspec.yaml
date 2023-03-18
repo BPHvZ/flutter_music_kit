@@ -2,6 +2,7 @@ name: music_kit
 description: A Flutter plugin to access and play Apple Music.
 version: 1.1.0
 homepage: https://github.com/misiio/flutter_music_kit/tree/master/music_kit
+publish_to: none
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -16,7 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 flutter:  
   plugin:
