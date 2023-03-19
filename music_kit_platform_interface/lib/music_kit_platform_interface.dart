@@ -138,6 +138,10 @@ abstract class MusicKitPlatform extends PlatformInterface {
     throw UnimplementedError('setQueueWithItems() has not been implemented.');
   }
 
+  Future<void> removeItemWithId(String musicItemID) async {
+    throw UnimplementedError('removeItemWithId() has not been implemented.');
+  }
+
   Stream<MusicPlayerQueue> get onPlayerQueueChanged {
     throw UnimplementedError(
         'get onPlayerQueueChanged has not been implemented.');
@@ -167,8 +171,7 @@ abstract class MusicKitPlatform extends PlatformInterface {
     throw UnimplementedError('toggleShuffleMode() has not been implemented.');
   }
 
-  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) async {
-    throw UnimplementedError(
-        'searchAndSetSongByISRC() has not been implemented.');
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
+    throw UnimplementedError('searchSongByISRC() has not been implemented.');
   }
 }

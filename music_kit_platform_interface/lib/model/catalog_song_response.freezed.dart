@@ -929,7 +929,9 @@ mixin _$PlayParams {
   String? get catalogId => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get kind => throw _privateConstructorUsedError;
+  @JsonKey(name: 'musicKit_databaseID')
   String? get musicKitDatabaseID => throw _privateConstructorUsedError;
+  @JsonKey(name: 'musicKit_persistentID')
   String? get musicKitPersistentID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -948,8 +950,8 @@ abstract class $PlayParamsCopyWith<$Res> {
       {String? catalogId,
       String? id,
       String? kind,
-      String? musicKitDatabaseID,
-      String? musicKitPersistentID});
+      @JsonKey(name: 'musicKit_databaseID') String? musicKitDatabaseID,
+      @JsonKey(name: 'musicKit_persistentID') String? musicKitPersistentID});
 }
 
 /// @nodoc
@@ -1008,8 +1010,8 @@ abstract class _$$_PlayParamsCopyWith<$Res>
       {String? catalogId,
       String? id,
       String? kind,
-      String? musicKitDatabaseID,
-      String? musicKitPersistentID});
+      @JsonKey(name: 'musicKit_databaseID') String? musicKitDatabaseID,
+      @JsonKey(name: 'musicKit_persistentID') String? musicKitPersistentID});
 }
 
 /// @nodoc
@@ -1061,8 +1063,8 @@ class _$_PlayParams implements _PlayParams {
       {this.catalogId,
       this.id,
       this.kind,
-      this.musicKitDatabaseID,
-      this.musicKitPersistentID});
+      @JsonKey(name: 'musicKit_databaseID') this.musicKitDatabaseID,
+      @JsonKey(name: 'musicKit_persistentID') this.musicKitPersistentID});
 
   factory _$_PlayParams.fromJson(Map<String, dynamic> json) =>
       _$$_PlayParamsFromJson(json);
@@ -1074,8 +1076,10 @@ class _$_PlayParams implements _PlayParams {
   @override
   final String? kind;
   @override
+  @JsonKey(name: 'musicKit_databaseID')
   final String? musicKitDatabaseID;
   @override
+  @JsonKey(name: 'musicKit_persistentID')
   final String? musicKitPersistentID;
 
   @override
@@ -1122,8 +1126,10 @@ abstract class _PlayParams implements PlayParams {
       {final String? catalogId,
       final String? id,
       final String? kind,
-      final String? musicKitDatabaseID,
-      final String? musicKitPersistentID}) = _$_PlayParams;
+      @JsonKey(name: 'musicKit_databaseID')
+          final String? musicKitDatabaseID,
+      @JsonKey(name: 'musicKit_persistentID')
+          final String? musicKitPersistentID}) = _$_PlayParams;
 
   factory _PlayParams.fromJson(Map<String, dynamic> json) =
       _$_PlayParams.fromJson;
@@ -1135,8 +1141,10 @@ abstract class _PlayParams implements PlayParams {
   @override
   String? get kind;
   @override
+  @JsonKey(name: 'musicKit_databaseID')
   String? get musicKitDatabaseID;
   @override
+  @JsonKey(name: 'musicKit_persistentID')
   String? get musicKitPersistentID;
   @override
   @JsonKey(ignore: true)

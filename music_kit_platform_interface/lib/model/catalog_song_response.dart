@@ -68,8 +68,8 @@ class PlayParams with _$PlayParams {
     String? catalogId,
     String? id,
     String? kind,
-    String? musicKitDatabaseID,
-    String? musicKitPersistentID,
+    @JsonKey(name: 'musicKit_databaseID') String? musicKitDatabaseID,
+    @JsonKey(name: 'musicKit_persistentID') String? musicKitPersistentID,
   }) = _PlayParams;
 
   factory PlayParams.fromJson(Map<String, dynamic> json) =>

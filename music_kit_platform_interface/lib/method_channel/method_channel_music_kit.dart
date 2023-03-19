@@ -194,6 +194,12 @@ class MethodChannelMusicKit extends MusicKitPlatform {
     });
   }
 
+  @override
+  Future<void> removeItemWithId(String musicItemID) async {
+    return methodChannel
+        .invokeMethod('removeItemWithId', {"musicItemID": musicItemID});
+  }
+
   Stream<MusicPlayerQueue>? _onPlayerQueueChanged;
 
   @override
@@ -243,9 +249,9 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   }
 
   @override
-  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) async {
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
     String? jsonString = await methodChannel
-        .invokeMethod<String>('searchAndSetSongByISRC', {"isrc": isrc});
+        .invokeMethod<String>('searchSongByISRC', {"isrc": isrc});
     if (jsonString == null) return null;
     Map<String, dynamic> json = jsonDecode(jsonString);
     return CatalogSongResponse.fromJson(json);

@@ -1,7 +1,6 @@
 package app.misi.music_kit
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.Log
 import androidx.annotation.Keep
 import app.misi.music_kit.AuthActivityResultHandler.Companion.ERR_REQUEST_USER_TOKEN
@@ -358,7 +357,7 @@ class ChannelHandler(
     }
     val id = itemObject?.get("id") as String
     queueProviderBuilder.containers(containerType, id)
-    playerController?.prepare(queueProviderBuilder.build(), true)
+    playerController?.prepare(queueProviderBuilder.build(), false)
     result.success(null)
   }
 
@@ -380,7 +379,20 @@ class ChannelHandler(
     if (startingAt != null) {
       queueProviderBuilder.startItemIndex(startingAt)
     }
-    playerController?.prepare(queueProviderBuilder.build(), true)
+    playerController?.prepare(queueProviderBuilder.build(), false)
+    result.success(null)
+  }
+
+  @Keep
+  @Suppress("unused", "UNUSED_PARAMETER")
+  fun removeItemWithId(call: MethodCall, result: MethodChannel.Result) {
+    val musicItemID = call.argument<String>("musicItemID")
+    if (musicItemID != null) {
+      val entry = playerController?.queueItems?.first { it.item.subscriptionStoreId == musicItemID }
+      if (entry != null) {
+        playerController?.removeQueueItemWithId(entry.playbackQueueId)
+      }
+    }
     result.success(null)
   }
 
@@ -445,7 +457,7 @@ class ChannelHandler(
 
   @Keep
   @Suppress("unused", "UNUSED_PARAMETER")
-  fun searchAndSetSongByISRC(call: MethodCall, result: MethodChannel.Result) {
+  fun searchSongByISRC(call: MethodCall, result: MethodChannel.Result) {
     val isrc = call.argument<String>("isrc")
 
     if (musicUserToken.isNullOrBlank()) {
@@ -470,19 +482,6 @@ class ChannelHandler(
       response.fold(
         {
           if (it != null) {
-
-            // Add song to queue
-            // Normally we would want to do this in another function
-            // Due to problems with the iOS implementation we do it here
-            val itemType = it.type as String
-            val queueProviderBuilder = CatalogPlaybackQueueItemProvider.Builder()
-            val mediaItemType = when (itemType) {
-              "songs", "tracks" -> MediaItemType.SONG
-              else -> MediaItemType.UNKNOWN
-            }
-            val ids = listOf(it.id as String).toTypedArray()
-            queueProviderBuilder.items(mediaItemType, *ids)
-            playerController?.prepare(queueProviderBuilder.build(), false)
             result.success(Json.encodeToString(it))
           } else {
             result.success(null)

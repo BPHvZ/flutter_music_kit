@@ -102,8 +102,8 @@ _$_PlayParams _$$_PlayParamsFromJson(Map json) => _$_PlayParams(
       catalogId: json['catalogId'] as String?,
       id: json['id'] as String?,
       kind: json['kind'] as String?,
-      musicKitDatabaseID: json['musicKitDatabaseID'] as String?,
-      musicKitPersistentID: json['musicKitPersistentID'] as String?,
+      musicKitDatabaseID: json['musicKit_databaseID'] as String?,
+      musicKitPersistentID: json['musicKit_persistentID'] as String?,
     );
 
 Map<String, dynamic> _$$_PlayParamsToJson(_$_PlayParams instance) =>
@@ -111,6 +111,6 @@ Map<String, dynamic> _$$_PlayParamsToJson(_$_PlayParams instance) =>
       'catalogId': instance.catalogId,
       'id': instance.id,
       'kind': instance.kind,
-      'musicKitDatabaseID': instance.musicKitDatabaseID,
-      'musicKitPersistentID': instance.musicKitPersistentID,
+      'musicKit_databaseID': instance.musicKitDatabaseID,
+      'musicKit_persistentID': instance.musicKitPersistentID,
     };

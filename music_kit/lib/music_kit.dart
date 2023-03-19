@@ -94,6 +94,9 @@ class MusicKit {
         startingAt: startingAt,
       );
 
+  Future<void> removeItemWithId(String musicItemID) async =>
+      await _platform.removeItemWithId(musicItemID);
+
   Stream<MusicPlayerQueue> get onPlayerQueueChanged =>
       _platform.onPlayerQueueChanged;
 
@@ -113,6 +116,6 @@ class MusicKit {
   Future<MusicPlayerShuffleMode> toggleShuffleMode() =>
       _platform.toggleShuffleMode();
 
-  Future<CatalogSongResponse?> searchAndSetSongByISRC(String isrc) =>
-      _platform.searchAndSetSongByISRC(isrc);
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc) =>
+      _platform.searchSongByISRC(isrc);
 }

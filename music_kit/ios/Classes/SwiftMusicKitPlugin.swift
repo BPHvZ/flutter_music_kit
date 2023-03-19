@@ -91,6 +91,12 @@ public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
                 startingAt: arguments["startingAt"] as? Int,
                 result: result
             )
+        
+        case .removeItemWithId:
+            let arguments = call.arguments as! JSONObject
+            let musicIDString = arguments["musicItemID"] as! String
+            let musicID = MusicItemID(musicIDString)
+            removeItemWithId(musicID, result: result)
             
         case .repeatMode:
             repeatMode(result)
@@ -110,9 +116,10 @@ public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
         case .toggleShuffleMode:
             toggleShuffleMode(result)
             
-        case .searchAndSetSongByISRC:
+        case .searchSongByISRC:
             let arguments = call.arguments as! JSONObject
-            searchAndSetSongByISRC(arguments["isrc"] as! String, result: result)
+            let isrc = arguments["isrc"] as! String
+            searchSongByISRC(isrc, result: result)
         }
     }
 }
