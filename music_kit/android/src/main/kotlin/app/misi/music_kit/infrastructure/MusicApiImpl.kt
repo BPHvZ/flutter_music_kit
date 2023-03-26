@@ -40,6 +40,6 @@ class MusicApiImpl(
       }
     }.body<CatalogSongResponse>()
 
-    return response.data?.first { it.attributes?.playParams != null }
+    return response.data?.firstOrNull { it.attributes?.playParams != null }
   }
 }

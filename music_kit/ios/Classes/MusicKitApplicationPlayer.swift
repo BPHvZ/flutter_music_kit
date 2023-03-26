@@ -7,6 +7,7 @@
 
 import Foundation
 import MusicKit
+import MediaPlayer
 
 typealias ResourceObject = JSONObject
 
@@ -16,7 +17,22 @@ extension SwiftMusicKitPlugin {
         for playableItems: S,
         startingAt startPlayableItem: S.Element? = nil
     ) where S.Element == PlayableMusicItemType {
-        ApplicationMusicPlayer.shared.queue = ApplicationMusicPlayer.Queue(for: playableItems, startingAt: startPlayableItem)
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        
+        var playParameters: [MPMusicPlayerPlayParameters] = []
+        
+        playableItems.forEach { item in
+            guard let data = try? encoder.encode(item.playParameters) else { return }
+            guard let params = try? decoder.decode(MPMusicPlayerPlayParameters.self, from: data) else { return }
+                    playParameters.append(params)
+        }
+        
+        let queue = MPMusicPlayerPlayParametersQueueDescriptor(playParametersQueue: playParameters)
+        let player = MPMusicPlayerController.applicationMusicPlayer
+        player.setQueue(with: queue)
+        
+//        ApplicationMusicPlayer.shared.queue = ApplicationMusicPlayer.Queue(for: playableItems, startingAt: startPlayableItem)
     }
     
     func setQueue(itemType: String, itemObject: ResourceObject, result: @escaping FlutterResult) {
@@ -67,7 +83,6 @@ extension SwiftMusicKitPlugin {
     
     func removeItemWithId(_ itemId: MusicItemID, result: @escaping FlutterResult) {
         if let index = musicPlayer.queue.entries.firstIndex(where: { $0.item?.id == itemId }) {
-            
             musicPlayer.queue.entries.remove(at: index)
         }
         result(nil)
@@ -128,7 +143,7 @@ fileprivate func parseMusicItem(_ itemType: String, from itemObject: ResourceObj
     }
 }
 
-extension MusicPlayer {
+extension ApplicationMusicPlayer {
     var repeatMode: RepeatMode {
         return state.repeatMode ?? RepeatMode.none
     }

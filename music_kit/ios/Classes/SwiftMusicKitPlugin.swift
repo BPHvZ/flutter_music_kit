@@ -1,10 +1,12 @@
 import Flutter
+import MediaPlayer
 import UIKit
 import MusicKit
 import Combine
 
 public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
     internal var musicPlayer: ApplicationMusicPlayer = ApplicationMusicPlayer.shared
+    internal var playerController: MPMusicPlayerController = MPMusicPlayerController.applicationMusicPlayer
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "plugins.misi.app/music_kit", binaryMessenger: registrar.messenger())
@@ -119,7 +121,8 @@ public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
         case .searchSongByISRC:
             let arguments = call.arguments as! JSONObject
             let isrc = arguments["isrc"] as! String
-            searchSongByISRC(isrc, result: result)
+            let fallbackSearchTerm = arguments["fallbackSearchTerm"] as! String
+            searchSongByISRC(isrc, fallbackSearchTerm, result: result)
         }
     }
 }

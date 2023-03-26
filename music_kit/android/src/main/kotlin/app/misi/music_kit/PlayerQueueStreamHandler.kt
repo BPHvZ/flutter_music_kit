@@ -93,7 +93,7 @@ class PlayerQueueStreamHandler(private val playerController: MediaPlayerControll
     }
 
     override fun onPlaybackError(p0: MediaPlayerController, p1: MediaPlayerException) {
-      Log.d(LOG_TAG, "PQSH onPlaybackError() error(${p1.errorCode}): ${p1.message}")
+      Log.d(LOG_TAG, "PQSH onPlaybackError() error(${p1.errorCode}): ${p1.localizedMessage}")
     }
 
     override fun onPlaybackRepeatModeChanged(p0: MediaPlayerController, p1: Int) {

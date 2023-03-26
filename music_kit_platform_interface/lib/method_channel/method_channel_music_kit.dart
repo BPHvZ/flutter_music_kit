@@ -9,20 +9,16 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   final methodChannel = const MethodChannel('plugins.misi.app/music_kit');
 
   @visibleForTesting
-  final playerStateEventChannel =
-      const EventChannel('plugins.misi.app/music_kit/player_state');
+  final playerStateEventChannel = const EventChannel('plugins.misi.app/music_kit/player_state');
 
   @visibleForTesting
-  final playerQueueEventChannel =
-      const EventChannel('plugins.misi.app/music_kit/player_queue');
+  final playerQueueEventChannel = const EventChannel('plugins.misi.app/music_kit/player_queue');
 
   @visibleForTesting
-  final musicSubcriptionEventChannel =
-      const EventChannel('plugins.misi.app/music_kit/music_subscription');
+  final musicSubcriptionEventChannel = const EventChannel('plugins.misi.app/music_kit/music_subscription');
 
   @override
-  Future<void> initialize(String developerToken,
-      {String? musicUserToken}) async {
+  Future<void> initialize(String developerToken, {String? musicUserToken}) async {
     return methodChannel.invokeMethod(
       'initialize',
       {'developerToken': developerToken, 'musicUserToken': musicUserToken},
@@ -32,8 +28,7 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   @override
   Future<MusicAuthorizationStatus> requestAuthorizationStatus() async {
     try {
-      final resp = await methodChannel
-          .invokeMapMethod<String, dynamic>('requestAuthorizationStatus');
+      final resp = await methodChannel.invokeMapMethod<String, dynamic>('requestAuthorizationStatus');
       return MusicAuthorizationStatus.fromRawValue(
         resp!['status'].toInt(),
         musicUserToken: resp['musicUserToken']?.toString(),
@@ -47,8 +42,7 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Future<MusicAuthorizationStatus> get authorizationStatus async {
-    final resp = await methodChannel
-        .invokeMapMethod<String, dynamic>('authorizationStatus');
+    final resp = await methodChannel.invokeMapMethod<String, dynamic>('authorizationStatus');
     return MusicAuthorizationStatus.fromRawValue(
       resp!['status'].toInt(),
       musicUserToken: resp['musicUserToken']?.toString(),
@@ -57,15 +51,13 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Future<String> requestDeveloperToken() async {
-    final resp =
-        await methodChannel.invokeMethod<String>('requestDeveloperToken');
+    final resp = await methodChannel.invokeMethod<String>('requestDeveloperToken');
     return resp ?? '';
   }
 
   @override
   Future<String> requestUserToken(String developerToken) async {
-    final resp =
-        await methodChannel.invokeMethod('requestUserToken', developerToken);
+    final resp = await methodChannel.invokeMethod('requestUserToken', developerToken);
     return resp.toString();
   }
 
@@ -79,8 +71,7 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Stream<MusicSubscription> get onSubscriptionUpdated {
-    _onSubscriptionUpdated ??=
-        musicSubcriptionEventChannel.receiveBroadcastStream().map(
+    _onSubscriptionUpdated ??= musicSubcriptionEventChannel.receiveBroadcastStream().map(
       (event) {
         final json = event.cast<String, dynamic>();
         return MusicSubscription.fromMap(json);
@@ -104,8 +95,7 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Future<MusicPlayerState> get musicPlayerState async {
-    final resp = await methodChannel
-        .invokeMapMethod<String, dynamic>('musicPlayerState');
+    final resp = await methodChannel.invokeMapMethod<String, dynamic>('musicPlayerState');
     return MusicPlayerState.fromMap(resp!);
   }
 
@@ -113,8 +103,7 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Stream<MusicPlayerState> get onMusicPlayerStateChanged {
-    _onMusicPlayerStateChanged ??=
-        playerStateEventChannel.receiveBroadcastStream().map(
+    _onMusicPlayerStateChanged ??= playerStateEventChannel.receiveBroadcastStream().map(
       (event) {
         final json = event.cast<String, dynamic>();
         return MusicPlayerState.fromMap(json);
@@ -196,16 +185,14 @@ class MethodChannelMusicKit extends MusicKitPlatform {
 
   @override
   Future<void> removeItemWithId(String musicItemID) async {
-    return methodChannel
-        .invokeMethod('removeItemWithId', {"musicItemID": musicItemID});
+    return methodChannel.invokeMethod('removeItemWithId', {"musicItemID": musicItemID});
   }
 
   Stream<MusicPlayerQueue>? _onPlayerQueueChanged;
 
   @override
   Stream<MusicPlayerQueue> get onPlayerQueueChanged {
-    _onPlayerQueueChanged ??=
-        playerQueueEventChannel.receiveBroadcastStream().map(
+    _onPlayerQueueChanged ??= playerQueueEventChannel.receiveBroadcastStream().map(
       (event) {
         final json = Map<String, Object?>.from(event);
         return MusicPlayerQueue.fromJson(json);
@@ -249,9 +236,9 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   }
 
   @override
-  Future<CatalogSongResponse?> searchSongByISRC(String isrc) async {
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc, [String fallbackSearchTerm = '']) async {
     String? jsonString = await methodChannel
-        .invokeMethod<String>('searchSongByISRC', {"isrc": isrc});
+        .invokeMethod<String>('searchSongByISRC', {"isrc": isrc, "fallbackSearchTerm": fallbackSearchTerm});
     if (jsonString == null) return null;
     Map<String, dynamic> json = jsonDecode(jsonString);
     return CatalogSongResponse.fromJson(json);

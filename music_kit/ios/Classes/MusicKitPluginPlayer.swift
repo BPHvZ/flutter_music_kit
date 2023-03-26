@@ -16,11 +16,11 @@ let kErrorSkipToPrevious = "ERR_PLAYER_SKIP_TO_PREVIOUS"
 
 extension SwiftMusicKitPlugin {
     func isPreparedToPlay(_ result: @escaping FlutterResult) {
-        result(musicPlayer.isPreparedToPlay)
+        result(playerController.isPreparedToPlay)
     }
     
     func playbackTime(_ result: @escaping FlutterResult) {
-        result(musicPlayer.playbackTime)
+        result(playerController.currentPlaybackTime)
     }
     
     func musicPlayerState(_ result: @escaping FlutterResult) {
@@ -28,14 +28,14 @@ extension SwiftMusicKitPlugin {
     }
     
     func pause(_ result: @escaping FlutterResult) {
-        musicPlayer.pause()
+        playerController.pause()
         result(nil)
     }
     
     func play(_ result: @escaping FlutterResult) {
         Task {
             do {
-                try await musicPlayer.play()
+                playerController.play()
                 result(nil)
             } catch {
                 result(FlutterError(code: kErrorPlay, message: error.localizedDescription))
@@ -46,7 +46,7 @@ extension SwiftMusicKitPlugin {
     func prepareToPlay(_ result: @escaping FlutterResult) {
         Task {
             do {
-                try await musicPlayer.prepareToPlay()
+                try await playerController.prepareToPlay()
                 result(nil)
             } catch {
                 result(FlutterError(code: kErrorPrepareToPlay, message: error.localizedDescription))
@@ -62,7 +62,7 @@ extension SwiftMusicKitPlugin {
     func skipToNextEntry(_ result: @escaping FlutterResult) {
         Task {
             do {
-                try await musicPlayer.skipToNextEntry()
+                playerController.skipToNextItem()
                 result(nil)
             } catch {
                 result(FlutterError(code: kErrorSkipToNext, message: error.localizedDescription))
@@ -73,7 +73,7 @@ extension SwiftMusicKitPlugin {
     func skipToPreviousEntry(_ result: @escaping FlutterResult) {
         Task {
             do {
-                try await musicPlayer.skipToPreviousEntry()
+                playerController.skipToPreviousItem()
                 result(nil)
             } catch {
                 result(FlutterError(code: kErrorSkipToPrevious, message: error.localizedDescription))
@@ -82,7 +82,7 @@ extension SwiftMusicKitPlugin {
     }
     
     func stop(_ result: @escaping FlutterResult) {
-        musicPlayer.stop()
+        playerController.stop()
         result(nil)
     }
     

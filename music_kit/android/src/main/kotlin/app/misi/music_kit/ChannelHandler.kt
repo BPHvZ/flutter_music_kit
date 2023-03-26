@@ -379,7 +379,7 @@ class ChannelHandler(
     if (startingAt != null) {
       queueProviderBuilder.startItemIndex(startingAt)
     }
-    playerController?.prepare(queueProviderBuilder.build(), false)
+    playerController?.prepare(queueProviderBuilder.build(), true)
     result.success(null)
   }
 
@@ -388,7 +388,7 @@ class ChannelHandler(
   fun removeItemWithId(call: MethodCall, result: MethodChannel.Result) {
     val musicItemID = call.argument<String>("musicItemID")
     if (musicItemID != null) {
-      val entry = playerController?.queueItems?.first { it.item.subscriptionStoreId == musicItemID }
+      val entry = playerController?.queueItems?.firstOrNull { it.item.subscriptionStoreId == musicItemID }
       if (entry != null) {
         playerController?.removeQueueItemWithId(entry.playbackQueueId)
       }
