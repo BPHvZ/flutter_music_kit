@@ -71,15 +71,9 @@ extension SwiftMusicKitPlugin {
         }
     }
     
-//    func insertAtIndex<PlayableMusicItemType: PlayableMusicItem>(_ element: PlayableMusicItemType, atIndex: Int) {
-//        if (musicPlayer.queue.entries.count == 0) {
-//            setQueue(for: [element])
-//        } else {
-//            musicPlayer.queue.entries.insert(MusicPlayer.Queue.Entry(element), at: atIndex)
-//            let newQueue = musicPlayer.queue
-//            ApplicationMusicPlayer.shared.queue = newQueue
-//        }
-//    }
+    func getQueue(result: @escaping FlutterResult) {
+        result(musicPlayer.queue.jsonObject())
+    }
     
     func removeItemWithId(_ itemId: MusicItemID, result: @escaping FlutterResult) {
         if let index = musicPlayer.queue.entries.firstIndex(where: { $0.item?.id == itemId }) {

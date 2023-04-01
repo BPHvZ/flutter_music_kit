@@ -1,1 +1,3 @@
 rootProject.name = 'music_kit'
+include ':apple-music-playback'
+include ':apple-music-auth'

@@ -88,6 +88,8 @@ class MusicKit {
         startingAt: startingAt,
       );
 
+  Future<MusicPlayerQueue> getQueue() => _platform.getQueue();
+
   Future<void> removeItemWithId(String musicItemID) async => await _platform.removeItemWithId(musicItemID);
 
   Stream<MusicPlayerQueue> get onPlayerQueueChanged => _platform.onPlayerQueueChanged;

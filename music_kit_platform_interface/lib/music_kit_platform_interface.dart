@@ -130,6 +130,10 @@ abstract class MusicKitPlatform extends PlatformInterface {
     throw UnimplementedError('setQueueWithItems() has not been implemented.');
   }
 
+  Future<MusicPlayerQueue> getQueue() async {
+    throw UnimplementedError('getQueue() has not been implemented.');
+  }
+
   Future<void> removeItemWithId(String musicItemID) async {
     throw UnimplementedError('removeItemWithId() has not been implemented.');
   }

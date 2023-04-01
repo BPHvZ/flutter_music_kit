@@ -274,7 +274,7 @@ class ChannelHandler(
   @Keep
   @Suppress("unused", "UNUSED_PARAMETER")
   fun playbackTime(call: MethodCall, result: MethodChannel.Result) {
-    result.notImplemented()
+    result.success(playerController?.currentPosition?.toDouble())
   }
 
   @Keep
@@ -359,6 +359,21 @@ class ChannelHandler(
     queueProviderBuilder.containers(containerType, id)
     playerController?.prepare(queueProviderBuilder.build(), false)
     result.success(null)
+  }
+
+  @Keep
+  @Suppress("unused", "UNUSED_PARAMETER")
+  fun getQueue(call: MethodCall, result: MethodChannel.Result) {
+    if (playerController == null) result.success(null)
+    val entries = playerController!!.queueItems.map {
+      PlayerQueueStreamHandler.convertQueueItem(it)
+    }.toList()
+    val currentEntry = playerController!!.currentItem?.let { PlayerQueueStreamHandler.convertQueueItem(it) }
+    val queue = mapOf(
+      "entries" to entries,
+      "currentEntry" to currentEntry,
+    )
+    result.success(queue)
   }
 
   @Keep

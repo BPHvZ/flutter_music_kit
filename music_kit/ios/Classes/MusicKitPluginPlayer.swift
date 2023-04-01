@@ -20,7 +20,11 @@ extension SwiftMusicKitPlugin {
     }
     
     func playbackTime(_ result: @escaping FlutterResult) {
-        result(playerController.currentPlaybackTime)
+        var time = playerController.currentPlaybackTime
+        if !time.isNaN {
+            time *= 1000
+        }
+        result(time)
     }
     
     func musicPlayerState(_ result: @escaping FlutterResult) {
@@ -33,14 +37,8 @@ extension SwiftMusicKitPlugin {
     }
     
     func play(_ result: @escaping FlutterResult) {
-        Task {
-            do {
-                playerController.play()
-                result(nil)
-            } catch {
-                result(FlutterError(code: kErrorPlay, message: error.localizedDescription))
-            }
-        }
+        playerController.play()
+        result(nil)
     }
     
     func prepareToPlay(_ result: @escaping FlutterResult) {
@@ -60,25 +58,13 @@ extension SwiftMusicKitPlugin {
     }
     
     func skipToNextEntry(_ result: @escaping FlutterResult) {
-        Task {
-            do {
-                playerController.skipToNextItem()
-                result(nil)
-            } catch {
-                result(FlutterError(code: kErrorSkipToNext, message: error.localizedDescription))
-            }
-        }
+        playerController.skipToNextItem()
+        result(nil)
     }
     
     func skipToPreviousEntry(_ result: @escaping FlutterResult) {
-        Task {
-            do {
-                playerController.skipToPreviousItem()
-                result(nil)
-            } catch {
-                result(FlutterError(code: kErrorSkipToPrevious, message: error.localizedDescription))
-            }
-        }
+        playerController.skipToPreviousItem()
+        result(nil)
     }
     
     func stop(_ result: @escaping FlutterResult) {

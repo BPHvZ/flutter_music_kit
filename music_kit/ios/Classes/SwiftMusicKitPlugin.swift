@@ -93,6 +93,9 @@ public class SwiftMusicKitPlugin: NSObject, FlutterPlugin {
                 startingAt: arguments["startingAt"] as? Int,
                 result: result
             )
+            
+        case .getQueue:
+            getQueue(result: result)
         
         case .removeItemWithId:
             let arguments = call.arguments as! JSONObject
