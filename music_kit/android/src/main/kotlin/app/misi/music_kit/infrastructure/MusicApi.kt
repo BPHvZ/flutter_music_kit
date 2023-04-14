@@ -6,7 +6,7 @@ interface MusicApi {
   suspend fun getStorefrontId(
     developerToken: String,
     musicUserToken: String
-  ): String
+  ): String?
 
   suspend fun searchSongByISRC(
     developerToken: String,

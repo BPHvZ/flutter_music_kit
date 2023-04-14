@@ -16,7 +16,7 @@ extension SwiftMusicKitPlugin {
       eventSink = events
       
       updatesTask = Task {
-        for await subscription in MusicSubscription.subscriptionUpdates {
+          for await subscription in MusicSubscription.subscriptionUpdates {
           eventSink?(subscription.jsonObject())
         }
       }

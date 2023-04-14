@@ -7,7 +7,7 @@ class UserStorefrontRepository() {
   suspend fun getStorefrontId(
     developerToken: String,
     musicUserToken: String
-  ): Result<String> {
+  ): Result<String?> {
     return withContext(Dispatchers.IO) {
       try {
         val result = MusicApi.create().getStorefrontId(developerToken, musicUserToken)

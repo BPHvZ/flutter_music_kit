@@ -3,7 +3,6 @@ package app.misi.music_kit.infrastructure
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
 
 class MusicApiImpl(
@@ -16,7 +15,7 @@ class MusicApiImpl(
     const val SONGS = "songs"
   }
 
-  override suspend fun getStorefrontId(developerToken: String, musicUserToken: String): String {
+  override suspend fun getStorefrontId(developerToken: String, musicUserToken: String): String? {
     val storefronts = client.get(USER_STOREFRONT) {
       headers {
         append(HttpHeaders.Authorization, "Bearer $developerToken")
@@ -24,7 +23,7 @@ class MusicApiImpl(
       }
     }.body<Storefronts>()
 
-    return storefronts.data.first().id
+    return storefronts.data?.first()?.id
   }
 
   override suspend fun searchSongByISRC(
