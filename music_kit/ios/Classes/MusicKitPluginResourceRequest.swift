@@ -17,14 +17,13 @@ extension SwiftMusicKitPlugin {
             do {
                 NSLog("Search for ISRC: \(songISRC)")
                 let encoder = JSONEncoder()
-                let decoder = JSONDecoder()
                 encoder.dateEncodingStrategy = .iso8601
                 
                 let songRequest = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: songISRC)
                 let songResponse = try await songRequest.response()
                 if let firstSong = songResponse.items.filter({ song in
                     NSLog("result: \(song)")
-                    NSLog("result: \(song.playParameters)")
+                    NSLog("result: \(String(describing: song.playParameters))")
                     return song.playParameters != nil
                 }).first {
                     do {
@@ -41,7 +40,7 @@ extension SwiftMusicKitPlugin {
                 let searchResponse = try await searchRequest.response()
                 if let firstSong = searchResponse.songs.filter({ song in
                     NSLog("result: \(song)")
-                    NSLog("result: \(song.playParameters)")
+                    NSLog("result: \(String(describing: song.playParameters))")
                     return song.playParameters != nil
                 }).first {
                     do {

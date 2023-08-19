@@ -20,6 +20,10 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   final musicSubcriptionEventChannel =
       const EventChannel('plugins.misi.app/music_kit/music_subscription');
 
+  @visibleForTesting
+  final playerControllerEventChannel =
+      const EventChannel('plugins.misi.app/music_kit/player_controller');
+
   @override
   Future<void> initialize(String developerToken,
       {String? musicUserToken}) async {
@@ -91,6 +95,20 @@ class MethodChannelMusicKit extends MusicKitPlatform {
       },
     );
     return _onSubscriptionUpdated!;
+  }
+
+  Stream<PlayerControllerEvent>? _playerControllerEvent;
+
+  @override
+  Stream<PlayerControllerEvent> get playerControllerEvent {
+    _playerControllerEvent ??=
+        playerControllerEventChannel.receiveBroadcastStream().map(
+      (event) {
+        final json = event.cast<String, dynamic>();
+        return PlayerControllerEvent.fromMap(json);
+      },
+    );
+    return _playerControllerEvent!;
   }
 
   ///

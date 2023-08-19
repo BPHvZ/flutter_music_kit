@@ -2,6 +2,7 @@ library music_kit_platform_interface;
 
 import 'package:music_kit_platform_interface/method_channel/method_channel_music_kit.dart';
 import 'package:music_kit_platform_interface/model/catalog_song_response.dart';
+import 'package:music_kit_platform_interface/model/player_controller_state.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'model/music_authorization_status.dart';
@@ -15,6 +16,7 @@ export 'model/music_authorization_status_enum.dart';
 export 'model/music_player.dart';
 export 'model/music_player_queue.dart';
 export 'model/music_subscription.dart';
+export 'model/player_controller_state.dart';
 
 typedef JSONObject = Map<String, dynamic>;
 typedef ResourceObject = JSONObject;
@@ -33,20 +35,24 @@ abstract class MusicKitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> initialize(String developerToken, {String? musicUserToken}) async {
+  Future<void> initialize(String developerToken,
+      {String? musicUserToken}) async {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
   Future<MusicAuthorizationStatus> requestAuthorizationStatus() async {
-    throw UnimplementedError('requestAuthorizationStatus() has not been implemented.');
+    throw UnimplementedError(
+        'requestAuthorizationStatus() has not been implemented.');
   }
 
   Future<MusicAuthorizationStatus> get authorizationStatus async {
-    throw UnimplementedError('get authorizationStatus has not been implemented.');
+    throw UnimplementedError(
+        'get authorizationStatus has not been implemented.');
   }
 
   Future<String> requestDeveloperToken() async {
-    throw UnimplementedError('get requestDeveloperToken() has not been implemented.');
+    throw UnimplementedError(
+        'get requestDeveloperToken() has not been implemented.');
   }
 
   Future<String> requestUserToken(String developerToken) async {
@@ -54,11 +60,13 @@ abstract class MusicKitPlatform extends PlatformInterface {
   }
 
   Future<String> get currentCountryCode async {
-    throw UnimplementedError('get currentCountryCode has not been implemented.');
+    throw UnimplementedError(
+        'get currentCountryCode has not been implemented.');
   }
 
   Stream<MusicSubscription> get onSubscriptionUpdated {
-    throw UnimplementedError('get onSubscriptionUpdated has not been implemented.');
+    throw UnimplementedError(
+        'get onSubscriptionUpdated has not been implemented.');
   }
 
   ///
@@ -75,11 +83,18 @@ abstract class MusicKitPlatform extends PlatformInterface {
   }
 
   Stream<MusicPlayerState> get onMusicPlayerStateChanged {
-    throw UnimplementedError('get onMusicPlayerStateChanged has not been implemented.');
+    throw UnimplementedError(
+        'get onMusicPlayerStateChanged has not been implemented.');
+  }
+
+  Stream<PlayerControllerEvent> get playerControllerEvent {
+    throw UnimplementedError(
+        'get playerControllerEvent has not been implemented.');
   }
 
   Future<void> beginSeekingBackward() async {
-    throw UnimplementedError('beginSeekingBackward() has not been implemented.');
+    throw UnimplementedError(
+        'beginSeekingBackward() has not been implemented.');
   }
 
   Future<void> beginSeekingForward() async {
@@ -139,7 +154,8 @@ abstract class MusicKitPlatform extends PlatformInterface {
   }
 
   Stream<MusicPlayerQueue> get onPlayerQueueChanged {
-    throw UnimplementedError('get onPlayerQueueChanged has not been implemented.');
+    throw UnimplementedError(
+        'get onPlayerQueueChanged has not been implemented.');
   }
 
   Future<MusicPlayerRepeatMode> get repeatMode async {
@@ -166,7 +182,8 @@ abstract class MusicKitPlatform extends PlatformInterface {
     throw UnimplementedError('toggleShuffleMode() has not been implemented.');
   }
 
-  Future<CatalogSongResponse?> searchSongByISRC(String isrc, [String fallbackSearchTerm = '']) async {
+  Future<CatalogSongResponse?> searchSongByISRC(String isrc,
+      [String fallbackSearchTerm = '']) async {
     throw UnimplementedError('searchSongByISRC() has not been implemented.');
   }
 }

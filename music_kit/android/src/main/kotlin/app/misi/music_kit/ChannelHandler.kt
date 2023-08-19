@@ -31,6 +31,7 @@ class ChannelHandler(
     const val MUSIC_SUBSCRIPTION_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/music_subscription"
     const val MUSIC_PLAYER_STATE_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/player_state"
     const val MUSIC_PLAYER_QUEUE_EVENT_CHANNEL_NAME = "plugins.misi.app/music_kit/player_queue"
+    const val PLAYER_CONTROLLER_STATE_CHANNEL_NAME = "plugins.misi.app/music_kit/player_controller"
 
     const val PARAM_DEVELOPER_TOKEN_KEY = "developerToken"
     const val PARAM_MUSIC_USER_TOKEN_KEY = "musicUserToken"
@@ -42,6 +43,7 @@ class ChannelHandler(
   private var playerStateEventChannel: EventChannel? = null
   private var playerQueueEventChannel: EventChannel? = null
   private var subscriptionEventChannel: EventChannel? = null
+  private var playerControllerEventChannel: EventChannel? = null
 
   private lateinit var developerToken: String
   private var musicUserToken: String? = null
@@ -61,6 +63,7 @@ class ChannelHandler(
       || playerStateEventChannel != null
       || playerQueueEventChannel != null
       || subscriptionEventChannel != null
+      || playerControllerEventChannel != null
     ) {
       stopListening()
     }
@@ -73,6 +76,8 @@ class ChannelHandler(
     playerQueueEventChannel = EventChannel(messenger, MUSIC_PLAYER_QUEUE_EVENT_CHANNEL_NAME)
     subscriptionEventChannel = EventChannel(messenger, MUSIC_SUBSCRIPTION_EVENT_CHANNEL_NAME)
     subscriptionEventChannel?.setStreamHandler(null)
+    playerControllerEventChannel = EventChannel(messenger, PLAYER_CONTROLLER_STATE_CHANNEL_NAME)
+    playerControllerEventChannel?.setStreamHandler(null)
 
     if (playerController != null) {
       playerStateEventChannel?.setStreamHandler(PlayerStateStreamHandler(playerController))
@@ -92,6 +97,9 @@ class ChannelHandler(
 
     subscriptionEventChannel?.setStreamHandler(null)
     subscriptionEventChannel = null
+
+    playerControllerEventChannel?.setStreamHandler(null)
+    playerControllerEventChannel = null
 
     playerController?.release()
   }
@@ -145,7 +153,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun initialize(call: MethodCall, result: MethodChannel.Result) {
     developerToken = call.argument<String>(PARAM_DEVELOPER_TOKEN_KEY)!!
     musicUserToken = call.argument<String>(PARAM_MUSIC_USER_TOKEN_KEY)
@@ -214,7 +222,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun requestUserToken(call: MethodCall, result: MethodChannel.Result) {
     if (!musicUserToken.isNullOrBlank()) {
       result.success(musicUserToken)
@@ -345,7 +353,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun setQueue(call: MethodCall, result: MethodChannel.Result) {
     val itemType = call.argument<String>("type")
     val itemObject = call.argument<Map<String, Any>>("item")
@@ -377,7 +385,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun setQueueWithItems(call: MethodCall, result: MethodChannel.Result) {
     val itemType = call.argument<String>("type")
     val itemObjects = call.argument<List<Map<String, Any>>>("items")
@@ -399,7 +407,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun removeItemWithId(call: MethodCall, result: MethodChannel.Result) {
     val musicItemID = call.argument<String>("musicItemID")
     if (musicItemID != null) {
@@ -419,7 +427,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun setRepeatMode(call: MethodCall, result: MethodChannel.Result) {
     if (playerController?.canSetRepeatMode() == true) {
       val mode = call.arguments as Int
@@ -447,7 +455,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun setShuffleMode(call: MethodCall, result: MethodChannel.Result) {
     if (playerController?.canSetShuffleMode() == true) {
       val mode = call.arguments as Int
@@ -471,7 +479,7 @@ class ChannelHandler(
   }
 
   @Keep
-  @Suppress("unused", "UNUSED_PARAMETER")
+  @Suppress("unused")
   fun searchSongByISRC(call: MethodCall, result: MethodChannel.Result) {
     val isrc = call.argument<String>("isrc")
 

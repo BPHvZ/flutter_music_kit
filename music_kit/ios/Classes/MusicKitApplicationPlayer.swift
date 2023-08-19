@@ -25,14 +25,14 @@ extension SwiftMusicKitPlugin {
         playableItems.forEach { item in
             guard let data = try? encoder.encode(item.playParameters) else { return }
             guard let params = try? decoder.decode(MPMusicPlayerPlayParameters.self, from: data) else { return }
-                    playParameters.append(params)
+            playParameters.append(params)
         }
         
         let queue = MPMusicPlayerPlayParametersQueueDescriptor(playParametersQueue: playParameters)
         let player = MPMusicPlayerController.applicationMusicPlayer
         player.setQueue(with: queue)
         
-//        ApplicationMusicPlayer.shared.queue = ApplicationMusicPlayer.Queue(for: playableItems, startingAt: startPlayableItem)
+        //        ApplicationMusicPlayer.shared.queue = ApplicationMusicPlayer.Queue(for: playableItems, startingAt: startPlayableItem)
     }
     
     func setQueue(itemType: String, itemObject: ResourceObject, result: @escaping FlutterResult) {

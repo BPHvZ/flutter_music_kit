@@ -1126,10 +1126,9 @@ abstract class _PlayParams implements PlayParams {
       {final String? catalogId,
       final String? id,
       final String? kind,
-      @JsonKey(name: 'musicKit_databaseID')
-          final String? musicKitDatabaseID,
+      @JsonKey(name: 'musicKit_databaseID') final String? musicKitDatabaseID,
       @JsonKey(name: 'musicKit_persistentID')
-          final String? musicKitPersistentID}) = _$_PlayParams;
+      final String? musicKitPersistentID}) = _$_PlayParams;
 
   factory _PlayParams.fromJson(Map<String, dynamic> json) =
       _$_PlayParams.fromJson;
