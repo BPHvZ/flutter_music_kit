@@ -217,9 +217,10 @@ class MethodChannelMusicKit extends MusicKitPlatform {
   }
 
   @override
-  Future<MusicPlayerQueue> getQueue() {
+  Future<MusicPlayerQueue?> getQueue() {
     return methodChannel.invokeMethod('getQueue').then(
       (value) {
+        if (value == null) return null;
         final json = Map<String, Object?>.from(value);
         return MusicPlayerQueue.fromJson(json);
       },

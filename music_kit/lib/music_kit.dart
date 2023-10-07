@@ -98,7 +98,7 @@ class MusicKit {
         startingAt: startingAt,
       );
 
-  Future<MusicPlayerQueue> getQueue() => _platform.getQueue();
+  Future<MusicPlayerQueue?> getQueue() => _platform.getQueue();
 
   Future<void> removeItemWithId(String musicItemID) async =>
       await _platform.removeItemWithId(musicItemID);
